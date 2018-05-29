@@ -37,7 +37,7 @@ public:
 	void init_write_handler(void (*handler_write)(uint32_t write_value));
 	void init_read_handler(void (*handler_read)(void));
 
-	void write(uint32_t value);
+	void write(uint32_t write_value);
 	uint32_t read(void);
 	void write_bit(uint8_t bit_index, bool bit_value);
 	bool read_bit(uint8_t bit_index);
