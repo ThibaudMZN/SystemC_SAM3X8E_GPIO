@@ -9,13 +9,13 @@ EXEC = gpio_SAM3X8E
 SRC= src/main.cpp
 
 # Localisation de systemc
-INCLUDE = $(SYSTEMC_HOME)/include
+INCLUDE = -Iinclude -I$(SYSTEMC_HOME)/include
 
 # Le compilateur et ses flags
 CC = g++
 
-CFLAGS=-W -Wall
-LDFLAGS= -L$(LD_LIBRARY_PATH) -I$(INCLUDE) -l systemc
+CFLAGS=-W -Wall $(INCLUDE)
+LDFLAGS= -L$(LD_LIBRARY_PATH) $(INCLUDE) -l systemc
 
 
 OBJ=$(SRC:.c=.o)
