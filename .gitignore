@@ -1,6 +1,9 @@
 # Makefile propre
 Makefile.in
 
+# Application build
+gpio_SAM3X8E
+
 # Prerequisites
 *.d
 
