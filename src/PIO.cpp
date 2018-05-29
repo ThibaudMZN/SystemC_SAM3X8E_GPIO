@@ -22,4 +22,5 @@
  {
 
    PIO_PSR.write(PIO_PER.value & ~PIO_PDR.value);
+   PIO_PUSR.write(PIO_PUER.value & ~PIO_PUDR.value);
  }
