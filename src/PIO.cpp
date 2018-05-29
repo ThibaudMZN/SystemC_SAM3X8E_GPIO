@@ -20,6 +20,10 @@
 
  void PIO::update()
  {
-
+   // Pin
    PIO_PSR.write(PIO_PER.value & ~PIO_PDR.value);
+   // Pull Up
+   PIO_PUSR.write(PIO_PUER.value & ~PIO_PUDR.value);
+   // Output
+   PIO_OSR.write(PIO_OER.value & ~PIO_ODR.value);
  }
