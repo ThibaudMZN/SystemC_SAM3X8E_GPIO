@@ -6,7 +6,8 @@ include Makefile.in
 EXEC = gpio_SAM3X8E
 
 #liste des sources a compiler
-SRC= src/main.cpp
+SRC= 	src/main.cpp \
+	 	src/register.cpp
 
 # Localisation de systemc
 INCLUDE = -Iinclude -I$(SYSTEMC_HOME)/include
