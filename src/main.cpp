@@ -12,21 +12,27 @@
 
 
 #include "systemc.h"
-#include "port.h"
-#include "tb.h"
-
-#define PORT_A_SIZE 32
+#include "PIO.h"
+#include "adr.h"
+#include <iostream>
 
 int sc_main(int argc, char* argv[])
 {
-  sc_signal<bool> clkSig, rstSig;
+
+  PIO p = PIO(PIOA_BASE_ADDR);
+  p.PIO_PER.write(1);
+  p.PIO_PDR.write(2);
+  p.update();
+  std::cout << p.PIO_PSR.read() << std::endl;
+  /*sc_signal<bool> clkSig, rstSig;
   sc_signal<int> port_out;
 
   stim Stim1("Stimulus");
   Stim1.clk(clkSig);
   Stim1.rst(rstSig);
+  Stim1.gpio(port_out);
 
-  port_n<PORT_A_SIZE> PORT_A("port_A");
+  port_n<PORT_A_SIZE, PIOA_BASE_ADDR> PORT_A("port_A");
   PORT_A.clk(clkSig);
   PORT_A.rst(rstSig);
   PORT_A.gpio(port_out);
