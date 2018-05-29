@@ -31,6 +31,10 @@ Register::Register (uint32_t base, uint32_t offset, uint8_t access)
 	// To prepare the rigth
 	read_access = access & READ;
 	write_access = access & WRITE;
+
+	// No handler after init
+	handler_write = NULL;
+	handler_read = NULL;
 }
 
 Register::Register (uint32_t base, uint32_t offset, uint8_t access, uint32_t reset_value)
@@ -43,12 +47,23 @@ Register::Register (uint32_t base, uint32_t offset, uint8_t access, uint32_t res
 	// To prepare the rigth
 	read_access = access & READ;
 	write_access = access & WRITE;
+
+	// No handler after init
+	handler_write = NULL;
+	handler_read = NULL;
 }
+
+	void init_write_handler(void (*handler_write)(uint32_t value));
+	void init_read_handler(void (*handler_read)(void));
 
 void Register::write(uint32_t value)
 {
 	if (write_access)
+	{
 		value = value;
+		if (handler_write != NULL)
+			handler_write(value);
+	}
 }
 
 uint32_t Register::read(void)
@@ -61,6 +76,10 @@ uint32_t Register::read(void)
 	}
 	else
 		respons = 0;
+
+	if (handler_read != NULL)
+		handler_read();
+
 	return value;
 }
 
@@ -79,6 +98,8 @@ void Register::write_bit(uint8_t bit_index, bool value)
 		{
 			value &= !temp_value;
 		}
+		if (handler_write != NULL)
+			handler_write(value);
 	}
 }
 
@@ -94,4 +115,9 @@ bool Register::read_bit(uint8_t bit_index)
 	}
 	else
 		respons = 0;
+
+	if (handler_read != NULL)
+		handler_read();
+
+	return respons;
 }
