@@ -10,6 +10,17 @@ SystemC repository for school project about SAM3X8E Architecture, focused on GPI
 * UART :
 * PMC
 
+## Installation
+
+ You need to create a Makefile.in in your repository
+
+ ```
+	HOME_DIR=/home/<your_home_dir>
+	SYSTEMC_HOME=$(HOME_DIR)/<sytemC_folder>/systemc-2.3.2
+	LD_LIBRARY_PATH=$(SYSTEMC_HOME)/<systemC_lib_folder>
+
+ ```
+
 ## Usage
 
 Need SystemC Library available at http://www.accellera.org/downloads/standards/systemc
@@ -25,7 +36,7 @@ Instructions to build SystemC Lib :
 
 ## Credits
 
-F. Boizot, L. Boumah, J.F. Grandmoujin, M. Fouillat, P. Lebeau, T. Marazano
+F. Boizot, L. Boumah, J.F. GrandmouGin, M. Fouillat, P. Lebeau, T. Marazano
 
 ## License
 

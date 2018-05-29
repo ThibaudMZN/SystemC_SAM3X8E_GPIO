@@ -9,8 +9,6 @@ EXEC = gpio_SAM3E8E
 SRC= main.cpp 
 
 # Localisation de systemc
-LD_LIBRARY_PATH=$(SYSTEMC_HOME)/lib-linux64
-
 INCLUDE = $(SYSTEMC_HOME)/include
 
 # Le compilateur et ses flags
