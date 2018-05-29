@@ -26,13 +26,15 @@ SystemC repository for school project about SAM3X8E Architecture, focused on GPI
 Need SystemC Library available at http://www.accellera.org/downloads/standards/systemc
 
 Instructions to build SystemC Lib :
-* cd systemc-2.3.2
-* mkdir build
-* cd build
-* cmake ../
-* make
-* sudo make install
-* sudo ldconfig
+ ```
+cd systemc-2.3.2
+mkdir build
+cd build
+cmake ../
+make
+sudo make install
+sudo ldconfig
+ ```
 
 ## Credits
 
