@@ -12,6 +12,7 @@
 
 
 #include "systemc.h"
+#include "port.h"
 
 int sc_main(int argc, char* argv[])
 {
