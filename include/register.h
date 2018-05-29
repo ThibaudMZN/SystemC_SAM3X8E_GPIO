@@ -12,16 +12,25 @@
 
 using namespace std;
 
+#define NO_ACCESS	0x00
+#define READ 0x01
+#define WRITE 0x02
+#define READ_ONLY	READ
+#define WRITE_ONLY	WRITE
+#define READ_WRITE	READ + WRITE
+
 class Register
 {
 	// Declaration des membres privees
 	uint32_t address_base;
 	uint32_t address_offset;
 	uint32_t value;
+	bool read_access;
+	bool write_access;
 
 public:
-	Register(uint32_t base, uint32_t offset);
-	Register(uint32_t base, uint32_t offset, uint32_t reset_value);
+	Register(uint32_t base, uint32_t offset, uint8_t access);
+	Register(uint32_t base, uint32_t offset, uint8_t access, uint32_t reset_value);
 	void write(uint32_t value);
 	uint32_t read(void);
 	void write_bit(uint8_t bit_index, bool value);
