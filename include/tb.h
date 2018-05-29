@@ -15,7 +15,6 @@
 
  using namespace std;
 
- template<const int n = 8>
  SC_MODULE(stim)
  {
    sc_out<bool> clk, rst;
