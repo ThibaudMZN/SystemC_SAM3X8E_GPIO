@@ -1,3 +1,17 @@
+//  I/O Peripheral Base Address
+#define PIOA_BASE_ADDR      0x400E0E00 // 30 I/O Lines
+#define PIOB_BASE_ADDR      0x400E1000 // 32 I/O Lines
+#define PIOC_BASE_ADDR      0x400E1200 // 31 I/O Lines
+#define PIOD_BASE_ADDR      0x400E1400 // 10 I/O Lines
+// Number of I/O Lines for each Peripheral
+#define PIOA_SIZE           30
+#define PIOB_SIZE           32
+#define PIOC_SIZE           31
+#define PIOD_SIZE           10
+
+/////////////////////////////////////////////////////////////////
+////////////////////// GPIO REGISTERS ///////////////////////////
+/////////////////////////////////////////////////////////////////
 //PIO register
 #define PIO_PER_OFFSET      0x0000 // Enable
 #define PIO_PDR_OFFSET      0x0004 // Disable
