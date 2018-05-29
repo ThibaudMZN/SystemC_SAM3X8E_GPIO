@@ -53,14 +53,21 @@ Register::Register (uint32_t base, uint32_t offset, uint8_t access, uint32_t res
 	handler_read = NULL;
 }
 
-	void init_write_handler(void (*handler_write)(uint32_t value));
-	void init_read_handler(void (*handler_read)(void));
+void Register::init_write_handler(void (*handler)(uint32_t value))
+{
+	handler_write = handler;
+}
 
-void Register::write(uint32_t value)
+void Register::init_read_handler(void (*handler)(void))
+{
+	handler_read = handler;
+}
+
+void Register::write(uint32_t write_value)
 {
 	if (write_access)
 	{
-		value = value;
+		value = write_value;
 		if (handler_write != NULL)
 			handler_write(value);
 	}
@@ -83,14 +90,14 @@ uint32_t Register::read(void)
 	return value;
 }
 
-void Register::write_bit(uint8_t bit_index, bool value)
+void Register::write_bit(uint8_t bit_index, bool bit_value)
 {
 	uint32_t temp_value = 0;
 
 	if (write_access)
 	{
 		temp_value = 1 << bit_index;
-		if (value==1)
+		if (bit_value==1)
 		{
 			value |= temp_value;
 		}
