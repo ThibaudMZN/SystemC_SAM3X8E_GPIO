@@ -19,11 +19,45 @@
  SC_MODULE(stim)
  {
    sc_out<bool> clk, rst;
+   sc_out<sc_bigint<128>> 
+   PIO_PER,
+   PIO_PDR,
+   PIO_OER,
+   PIO_ODR,
+   PIO_IFER,
+   PIO_IFDR,
+   PIO_SODR,
+   PIO_CODR,
+   PIO_IER,
+   PIO_IDR,
+   PIO_MDER,
+   PIO_MDDR,
+   PIO_PUDR,
+   PIO_PUER,
+   PIO_ABSR,
+   PIO_OWER,
+   PIO_OWDR;
 
    void StimGen()
    {
-     clk.write(false);
-     rst.write(false);
+    PIO_PER.write(0x0000FFFF); // 0x0000FFFF
+   PIO_PDR.write(0xFFFF0000); // 0xFFFF0000
+   PIO_OER.write(0x000000FF); // 0x000000FF
+   PIO_ODR.write(0xFFFFFF00);
+   PIO_IFER.write();
+   PIO_IFDR.write();
+   PIO_SODR.write();
+   PIO_CODR.write();
+   PIO_IER.write();
+   PIO_IDR.write();
+   PIO_MDER.write();
+   PIO_MDDR.write();
+   PIO_PUDR.write();
+   PIO_PUER.write();
+   PIO_ABSR.write();
+   PIO_OWER.write();
+   PIO_OWDR.write();
+
 
      cout << "Done" << endl;
 
