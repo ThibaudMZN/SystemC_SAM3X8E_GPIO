@@ -36,7 +36,7 @@ Instructions to build SystemC Lib :
 
 ## Credits
 
-F. Boizot, L. Boumah, J.F. GrandmouGin, M. Fouillat, P. Lebeau, T. Marazano
+F. Boizot, L. Boumah, J.F. Grandmougin, M. Fouillat, P. Lebeau, T. Marazano
 
 ## License
 
