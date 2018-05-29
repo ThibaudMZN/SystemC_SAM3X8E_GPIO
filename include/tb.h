@@ -43,19 +43,19 @@
    PIO_PDR.write(0xFFFF0000); // 0xFFFF0000
    PIO_OER.write(0x000000FF); // 0x000000FF
    PIO_ODR.write(0xFFFFFF00);
-   PIO_IFER.write();
-   PIO_IFDR.write();
-   PIO_SODR.write();
-   PIO_CODR.write();
-   PIO_IER.write();
-   PIO_IDR.write();
-   PIO_MDER.write();
-   PIO_MDDR.write();
-   PIO_PUDR.write();
-   PIO_PUER.write();
-   PIO_ABSR.write();
-   PIO_OWER.write();
-   PIO_OWDR.write();
+   PIO_IFER.write(0x00000F00);
+   PIO_IFDR.write(0xFFFFF0FF);
+   PIO_SODR.write(0x00000000);
+   PIO_CODR.write(0x0FFFFFFF);
+   PIO_IER.write(0x0F000F00);
+   PIO_IDR.write(0xF0FFF0FF);
+   PIO_MDER.write(0x0000000F);
+   PIO_MDDR.write(0xFFFFFFF0);
+   PIO_PUDR.write(0xF0F000F0);
+   PIO_PUER.write(0X0F0FFF0F);
+   PIO_ABSR.write(0x00F00000);
+   PIO_OWER.write(0x0000000F);
+   PIO_OWDR.write(0x0FFFFFF0);
 
 
      cout << "Done" << endl;
