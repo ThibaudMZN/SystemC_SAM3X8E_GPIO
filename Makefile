@@ -3,10 +3,10 @@
 include Makefile.in
 
 # Nom de l'executable
-EXEC = gpio_SAM3E8E
+EXEC = gpio_SAM3X8E
 
 #liste des sources a compiler
-SRC= src/main.cpp 
+SRC= src/main.cpp
 
 # Localisation de systemc
 INCLUDE = $(SYSTEMC_HOME)/include
@@ -27,7 +27,7 @@ help :
 	@echo "run \t==> \t pour executer le programme"
 
 build : $(OBJ)
-	$(CC) -o $(EXEC) $^ $(LDFLAGS) 
+	$(CC) -o $(EXEC) $^ $(LDFLAGS)
 
 run : build
 	LD_LIBRARY_PATH=$(LD_LIBRARY_PATH) ./$(EXEC)
