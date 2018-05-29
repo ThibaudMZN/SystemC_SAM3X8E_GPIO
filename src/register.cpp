@@ -19,6 +19,11 @@
 
 using namespace std;
 
+Register::Register()
+{
+
+}
+
 Register::Register (uint32_t base, uint32_t offset, uint8_t access)
 {
 	srand (time(NULL));
