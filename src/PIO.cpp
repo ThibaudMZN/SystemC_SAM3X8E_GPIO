@@ -25,12 +25,21 @@
    regs.push_back(*(new Register(base_address, PIO_PDR_OFFSET, WRITE_ONLY, 0)));
    regs.push_back(*(new Register(base_address, PIO_PSR_OFFSET, READ_ONLY, 0)));
 
-   regs.push_back(*(new Register()));
+   regs.push_back(*(new Register())); // RESERVED
 
    regs.push_back(*(new Register(base_address, PIO_OER_OFFSET, WRITE_ONLY, 0)));
    regs.push_back(*(new Register(base_address, PIO_ODR_OFFSET, WRITE_ONLY, 0)));
    regs.push_back(*(new Register(base_address, PIO_OSR_OFFSET, READ_ONLY, 0)));
+
+   regs.push_back(*(new Register())); // RESERVED
+
+   //pointToCallback();
  }
+
+ /*void pointToCallback()
+ {
+
+ }*/
 
  void PIO::update()
  {
