@@ -121,16 +121,33 @@ void PIO::Callback_pull_up()
 // §31.5.10 Input Edge/Level Interrupt
 void PIO::Callback_inputEdge_LevelEdge()
 {
-    // PIO interrupt generation
+
+}
+
+// PIO interrupt generation
+void PIO::Callback_IMR()
+{
     regs[PIO_IMR_OFFSET/4].value = regs[PIO_IER_OFFSET/4].value &
                                    ~regs[PIO_IDR_OFFSET/4].value;
-    // Additional interrupt mode activation
+}
+
+// Additional interrupt mode activation
+void PIO::Callback_AIMMR()
+{
     regs[PIO_AIMMR_OFFSET/4].value = regs[PIO_AIMER_OFFSET/4].value &
                                    ~regs[PIO_AIMDR_OFFSET/4].value;
-    // Additional interrupt mode event selection
-    regs[PIO_ELSR_OFFSET/4].value = regs[PIO_ESR_OFFSET/4].value &
+}
+
+// Additional interrupt mode event selection
+void PIO::Callback_ELSR()
+{
+   regs[PIO_ELSR_OFFSET/4].value = regs[PIO_ESR_OFFSET/4].value &
                                    ~regs[PIO_LSR_OFFSET/4].value;
-    // Additional interrupt mode : polarity event selection
+}
+
+// Additional interrupt mode : polarity event selection
+void PIO::Callback_FRLHSR()
+{
     regs[PIO_FRLHSR_OFFSET/4].value = regs[PIO_FELLSR_OFFSET/4].value &
                                       ~regs[PIO_REHLSR_OFFSET/4].value;
 }
