@@ -1,35 +1,31 @@
+#include "initiator.h"
+#include "target.h"
 #include "systemc.h"
 #include "PIO.h"
 
 template<const int base_addr = 0x00>
 SC_MODULE(pio_controller)
 {
-  // sc_out<bool> interrupt;
 
-  // sc_in<uint32_t> in_peripheral_A;
-  // sc_in<uint32_t> in_peripheral_B;
-  //
-  // sc_out<uint32_t> out_peripheral_A;
-  // sc_out<uint32_t> out_peripheral_B;
-  //
-  // sc_in<uint32_t> in_pins;
-  // sc_out<uint32_t> out_pins;
-
-  PIO* pio;
-  bool enable;
+  PIO* pio; // déclaration d'un PIO CONTROLLER
+  bool enable; // envoyé par PMC
+};
 
 
-  /*void do_pio_control()
+SC_MODULE(Top)
+{
+  Initiator *initiator;
+  Memory    *memory;
+
+  SC_CTOR(Top)
   {
-    //F.write(A.read() + B.read());
-    pio->write_in_reg(0, 1);
-    pio->write_in_reg(1, 2);
+    // Instantiate components
+    initiator = new Initiator("initiator");
+    memory    = new Memory   ("memory");
+
+    // One initiator is bound directly to one target with no intervening bus
+
+    // Bind initiator socket to target socket
+    initiator->socket.bind( memory->socket );
   }
-
-  SC_CTOR(pio_controller)
-  {
-    SC_METHOD(do_pio_control);
-    sensitive << in_peripheral_A << in_peripheral_B << in_pins;
-    pio = new PIO(base_addr);
-  }*/
 };
