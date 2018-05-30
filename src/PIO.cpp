@@ -52,7 +52,7 @@
  	 regs.push_back(*(new Register())); // RESERVED
  	 regs.push_back(*(new Register(base_address, PIO_ABSR_OFFSET, READ_WRITE, 0)));
  	 regs.push_back(*(new Register())); // RESERVED
- 	 regs.push_back(*(new Register(base_address, PIO_SCIFSR, WRITE_ONLY, 0)));
+ 	 regs.push_back(*(new Register(base_address, PIO_SCIFSR_OFFSET, WRITE_ONLY, 0)));
  	 regs.push_back(*(new Register(base_address, PIO_IFDGSR_OFFSET, WRITE_ONLY, 0)));
  	 regs.push_back(*(new Register(base_address, PIO_SCDR_OFFSET, READ_WRITE, 0)));
  	 regs.push_back(*(new Register())); // RESERVED
@@ -84,6 +84,7 @@
    regs[1].init_write_handler(this, &PIO::Callback_PER);
  }
 
+// Paragraph 31.5.2
  void PIO::Callback_PER()
  {
    regs[2].value = (regs[0].value & ~regs[1].value); // PSR = PER  and not(PDR)
@@ -98,3 +99,12 @@
  {
    return regs[n].read();
  }
+
+// Paragraph 31.5.8 Nothing to do
+
+// Paragraph 31.5.9 
+ void PIO::Callback_Glitch_debounce()
+ {
+   regs[PIO_IFDGSR_OFFSET/4].value = (regs[PIO_SCIFSR_OFFSET/4].value & ~regs[PIO_DIFSR_OFFSET/4].value); // PSR = SCIFSR  and not(DIFSR)
+ }
+
