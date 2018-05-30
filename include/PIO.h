@@ -22,7 +22,7 @@ using namespace std;
  	uint32_t base_address;
 
  public:
- std::vector<Register> regs;
+   std::vector<Register> regs;
  	 PIO(uint32_t base);
    void initRegs();
    void pointToCallback();
