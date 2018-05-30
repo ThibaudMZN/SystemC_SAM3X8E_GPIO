@@ -6,13 +6,18 @@
 template<const uint32_t base_addr = 0x00>
 SC_MODULE(pio_controller)
 {
-  PIO pio;
   bool enable;
-  PMC_TARGET pmc_target;/*, &enable);*/
 
-  SC_CTOR(pio_controller) : pio(base_addr), pmc_target("pmc_target", &enable)
+  PIO pio;
+  PMC_TARGET pmc_target;
+  NVIC_INITIATOR nvic_initiator;
+
+  SC_CTOR(pio_controller) :
+  pio(base_addr),
+  pmc_target("pmc_target", &enable),
+  nvic_initiator("nvic_target")
   {
-    //pio = new PIO(base_addr);
+    nvic_initiator.emit_interrupt();
   }
 };
 
