@@ -150,10 +150,13 @@ void PIO::Callback_pull_up()
  }
 // §31.5.10 Input Edge/Level Interrupt
 void PIO::Callback_inputEdge_LevelEdge()
-{
-//if (regs[PIO_PDSR_OFFSET/4].value != regs[PIO_PDSR_OFFSET/4].previous_value)
+{ 
     regs[PIO_ISR_OFFSET/4].value = regs[PIO_PDSR_OFFSET/4].value &
                                    regs[PIO_IMR_OFFSET/4].value;
+    if (regs[PIO_ISR_OFFSET/4].value != 0x00000000)
+        {  
+            interrupt = true;
+        }
 }
 
 // PIO interrupt generation
