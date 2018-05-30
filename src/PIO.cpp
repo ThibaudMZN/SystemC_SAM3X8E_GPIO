@@ -59,7 +59,7 @@
    regs.push_back(*(new Register(base_address, PIO_SODR_OFFSET, WRITE_ONLY, 0)));
    regs.push_back(*(new Register(base_address, PIO_CODR_OFFSET, WRITE_ONLY, 0)));
    regs.push_back(*(new Register(base_address, PIO_ODSR_OFFSET, READ_WRITE, 0)));
-   regs.push_back(*(new Register(base_address, PIO_PDSR_OFFSET, READ_ONLY, 0)));
+   regs.push_back(*(new Register(base_address, PIO_PDSR_OFFSET, READ_WRITE, 0)));
    regs.push_back(*(new Register(base_address, PIO_IER_OFFSET, WRITE_ONLY, 0)));
    regs.push_back(*(new Register(base_address, PIO_IDR_OFFSET, WRITE_ONLY, 0)));
    regs.push_back(*(new Register(base_address, PIO_IMR_OFFSET, READ_ONLY, 0)));
@@ -113,7 +113,7 @@
    regs[PIO_ODR_OFFSET/4].init_write_handler(this, &PIO::Callback_Output_control_OSR);
    regs[PIO_SODR_OFFSET/4].init_write_handler(this, &PIO::Callback_Output_control_ODSR);
    regs[PIO_CODR_OFFSET/4].init_write_handler(this, &PIO::Callback_Output_control_ODSR);
-   regs[PIO_SCIFSR_OFFSET/4].init_write_handler(this, &PIO::Callback_Glitch_debounce); 
+   regs[PIO_SCIFSR_OFFSET/4].init_write_handler(this, &PIO::Callback_Glitch_debounce);
    regs[PIO_DIFSR_OFFSET/4].init_write_handler(this, &PIO::Callback_Glitch_debounce);
    regs[PIO_MDER_OFFSET/4].init_write_handler(this, &PIO::Callback_multi_drive_control);
    regs[PIO_MDDR_OFFSET/4].init_write_handler(this, &PIO::Callback_multi_drive_control);
@@ -139,13 +139,13 @@ void PIO::Callback_pull_up()
  {
    regs[PIO_PUSR_OFFSET/4].value = (regs[PIO_PUDR_OFFSET/4].value &
                                     regs[PIO_PUER_OFFSET/4].value);
-    
+
  }
 
 // §31.5.2 if PIO_PSR value = 0, pin is controlled by PIO_ABSR, if PIO_PSR value = 1,pin is controlled by PIO controller
  void PIO::Callback_selection_IOline_peripheral()
  {
-    regs[PIO_PSR_OFFSET/4].value = (regs[PIO_PER_OFFSET/4].value & 
+    regs[PIO_PSR_OFFSET/4].value = (regs[PIO_PER_OFFSET/4].value &
                                     ~regs[PIO_PDR_OFFSET/4].value);
  }
 // §31.5.10 Input Edge/Level Interrupt
@@ -185,7 +185,7 @@ void PIO::Callback_FRLHSR()
 
 /*void selection_peripheral(); // bit = 0 (periph A), =1 (periph B) */
 // §31.5.3 PIO_ABSR value = 0, pin is on peripheral A, PIO_ABSR value = 1, pin is on peripheral B
- void PIO::Callback_selection_peripheral() 
+ void PIO::Callback_selection_peripheral()
 {
     regs[PIO_ABSR_OFFSET/4].value = regs[PIO_PSR_OFFSET/4].value & 0xFFFFFFFF;
 }
@@ -214,7 +214,7 @@ void PIO::Callback_multi_drive_control()
 
 // Paragraph 31.5.8
 
-// Paragraph 31.5.9 
+// Paragraph 31.5.9
  void PIO::Callback_Glitch_debounce()
  {
    regs[PIO_IFDGSR_OFFSET/4].value = (regs[PIO_SCIFSR_OFFSET/4].value & ~regs[PIO_DIFSR_OFFSET/4].value); // PSR = SCIFSR  and not(DIFSR)
@@ -223,5 +223,4 @@ void PIO::Callback_multi_drive_control()
 // Paragraph 31.5.11 I/O lines lock
 // If a GPIO is locked by a peripheral (mainly by PWM), writing in PER,PDR, MDER
 //    PUDR, PUER and ABSR is discarded.
-// Not implemented  
-
+// Not implemented
