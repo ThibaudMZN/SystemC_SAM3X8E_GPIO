@@ -14,14 +14,14 @@ SC_MODULE(pio_controller)
 
 SC_MODULE(Top)
 {
-  Initiator *initiator;
-  Memory    *memory;
+  PMC_INITIATOR *initiator;
+  PIO_TARGET    *memory;
 
   SC_CTOR(Top)
   {
     // Instantiate components
-    initiator = new Initiator("initiator");
-    memory    = new Memory   ("memory");
+    initiator = new PMC_INITIATOR("initiator");
+    memory    = new PIO_TARGET   ("memory");
 
     // One initiator is bound directly to one target with no intervening bus
 
