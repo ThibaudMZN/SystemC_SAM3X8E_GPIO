@@ -96,7 +96,15 @@
    regs[PIO_DIFSR_OFFSET/4].init_write_handler(this, &PIO::Callback_Glitch_debounce);
    regs[PIO_MDER_OFFSET/4].init_write_handler(this, &PIO::Callback_multi_drive_control);
    regs[PIO_MDDR_OFFSET/4].init_write_handler(this, &PIO::Callback_multi_drive_control);
- }
+   regs[PIO_IER_OFFSET/4].init_write_handler(this, &PIO::Callback_IMR);
+   regs[PIO_IDR_OFFSET/4].init_write_handler(this, &PIO::Callback_IMR);
+   regs[PIO_AIMER_OFFSET/4].init_write_handler(this, &PIO::Callback_AIMMR);
+   regs[PIO_AIMDR_OFFSET/4].init_write_handler(this, &PIO::Callback_AIMMR);
+   regs[PIO_ESR_OFFSET/4].init_write_handler(this, &PIO::Callback_ELSR);
+   regs[PIO_LSR_OFFSET/4].init_write_handler(this, &PIO::Callback_ELSR);
+   regs[PIO_FELLSR_OFFSET/4].init_write_handler(this, &PIO::Callback_FRLHSR);
+   regs[PIO_REHLSR_OFFSET/4].init_write_handler(this, &PIO::Callback_FRLHSR);
+}
 
 // Paragraph 31.5.2
  void PIO::Callback_PER()

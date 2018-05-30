@@ -20,9 +20,9 @@ using namespace std;
  class PIO
  {
  	uint32_t base_address;
+   std::vector<Register> regs;
 
  public:
-   std::vector<Register> regs;
  	 PIO(uint32_t base);
    void initRegs();
    void pointToCallback();
