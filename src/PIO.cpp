@@ -11,6 +11,7 @@
  */
 
  #include <stdint.h>
+ #include <iostream>
  #include "PIO.h"
 
  PIO::PIO (uint32_t base)
@@ -33,18 +34,28 @@
 
    regs.push_back(*(new Register())); // RESERVED
 
-   //pointToCallback();
+   pointToCallback();
  }
 
- /*void pointToCallback()
+ void PIO::pointToCallback()
  {
+   regs[0].init_write_handler(this, &PIO::Callback_PER);
+   regs[1].init_write_handler(this, &PIO::Callback_PER);
+   // regs[0].handler_write(&PIO::Callback_1)
+ }
 
- }*/
-
- void PIO::update()
+ void PIO::Callback_PER()
  {
    regs[2].value = (regs[0].value & ~regs[1].value); // PSR = PER  and not(PDR)
+   std::cout <<"Callback"<<std::endl;
  }
+
+
+
+ /*void PIO::update()
+ {
+   regs[2].value = (regs[0].value & ~regs[1].value); // PSR = PER  and not(PDR)
+ }*/
 
  /*void PIO::update()
  {

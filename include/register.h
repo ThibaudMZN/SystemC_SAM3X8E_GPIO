@@ -19,6 +19,8 @@ using namespace std;
 #define WRITE_ONLY	WRITE
 #define READ_WRITE	READ + WRITE
 
+class PIO;
+
 class Register
 {
 	// Declaration des membres privees
@@ -26,16 +28,17 @@ class Register
 	uint32_t address_offset;
 	bool read_access;
 	bool write_access;
-	void (*handler_write)(uint32_t value);
+	PIO* parent;
+	void (PIO::*handler_write)(void);
 	void (*handler_read)(void);
 
 public:
 	uint32_t value;
-
+	Register();
 	Register(uint32_t base, uint32_t offset, uint8_t access);
 	Register(uint32_t base, uint32_t offset, uint8_t access, uint32_t reset_value);
-	void init_write_handler(void (*handler_write)(uint32_t write_value));
-	void init_read_handler(void (*handler_read)(void));
+	void init_write_handler(PIO* obj, void (PIO::*func)(void));
+	void init_read_handler(void (*func_read)(void));
 
 	void write(uint32_t write_value);
 	uint32_t read(void);

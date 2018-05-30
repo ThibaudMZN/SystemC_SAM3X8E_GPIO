@@ -20,10 +20,10 @@ int sc_main(int argc, char* argv[])
 {
 
   PIO p = PIO(PIOA_BASE_ADDR);
-  p.PIO_PER.write(1);
-  p.PIO_PDR.write(2);
-  p.update();
-  std::cout << p.PIO_PSR.read() << std::endl;
+  p.regs[0].write(1);
+  p.regs[1].write(2);
+  //p.update();
+  std::cout << p.regs[2].read() << std::endl;
   /*sc_signal<bool> clkSig, rstSig;
   sc_signal<int> port_out;
 
