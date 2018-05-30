@@ -60,6 +60,7 @@
    regs.push_back(*(new Register(base_address, PIO_CODR_OFFSET, READ_WRITE, 0)));
    regs.push_back(*(new Register(base_address, PIO_ODSR_OFFSET, READ_WRITE, 0)));
    regs.push_back(*(new Register(base_address, PIO_PDSR_OFFSET, READ_WRITE, 0)));
+<<<<<<< HEAD
    regs.push_back(*(new Register(base_address, PIO_IER_OFFSET, READ_WRITE, 0)));
    regs.push_back(*(new Register(base_address, PIO_IDR_OFFSET, READ_WRITE, 0)));
    regs.push_back(*(new Register(base_address, PIO_IMR_OFFSET, READ_WRITE, 0)));
@@ -67,6 +68,15 @@
    regs.push_back(*(new Register(base_address, PIO_MDER_OFFSET, READ_WRITE, 0)));
    regs.push_back(*(new Register(base_address, PIO_MDDR_OFFSET, READ_WRITE, 0)));
    regs.push_back(*(new Register(base_address, PIO_MDSR_OFFSET, READ_WRITE, 0)));
+=======
+   regs.push_back(*(new Register(base_address, PIO_IER_OFFSET, WRITE_ONLY, 0)));
+   regs.push_back(*(new Register(base_address, PIO_IDR_OFFSET, WRITE_ONLY, 0)));
+   regs.push_back(*(new Register(base_address, PIO_IMR_OFFSET, READ_ONLY, 0)));
+   regs.push_back(*(new Register(base_address, PIO_ISR_OFFSET, READ_ONLY, 0)));
+   regs.push_back(*(new Register(base_address, PIO_MDER_OFFSET, WRITE_ONLY, 0)));
+   regs.push_back(*(new Register(base_address, PIO_MDDR_OFFSET, WRITE_ONLY, 0)));
+   regs.push_back(*(new Register(base_address, PIO_MDSR_OFFSET, READ_ONLY, 0)));
+>>>>>>> 6f4610afffbaa468c6d1301e7aed058a5ce55199
    regs.push_back(*(new Register())); // RESERVED
    regs.push_back(*(new Register(base_address, PIO_PUDR_OFFSET, READ_WRITE, 0)));
    regs.push_back(*(new Register(base_address, PIO_PUER_OFFSET, READ_WRITE, 0)));
@@ -125,6 +135,7 @@
    regs[PIO_LSR_OFFSET/4].init_write_handler(this, &PIO::Callback_ELSR);
    regs[PIO_FELLSR_OFFSET/4].init_write_handler(this, &PIO::Callback_FRLHSR);
    regs[PIO_REHLSR_OFFSET/4].init_write_handler(this, &PIO::Callback_FRLHSR);
+   regs[PIO_IFSR_OFFSET/4].init_write_handler(this, &PIO::Callback_inputEdge_LevelEdge);
 }
 
 // Paragraph 31.5.2

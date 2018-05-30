@@ -6,7 +6,6 @@ using namespace std;
 #include "tlm.h"
 #include "tlm_utils/simple_initiator_socket.h"
 
-
 class NVIC_INITIATOR: sc_module
 {
   tlm_utils::simple_initiator_socket<NVIC_INITIATOR> socket;

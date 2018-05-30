@@ -32,6 +32,7 @@ Register::Register (uint32_t base, uint32_t offset, uint8_t access)
 	address_offset = offset;
 
 	value = rand() % 2^32;	// The value of register at power up is random
+	previous_value = value;
 
 	// To prepare the rigth
 	read_access = access & READ;
@@ -47,6 +48,7 @@ Register::Register (uint32_t base, uint32_t offset, uint8_t access, uint32_t res
 	address_base = base;
 	address_offset = offset;
 
+	previous_value = reset_value;
 	value = reset_value; 	// Value is define in documentation
 
 	// To prepare the rigth
@@ -74,6 +76,7 @@ void Register::write(uint32_t write_value)
 {
 	if (write_access)
 	{
+		previous_value = value;
 		value = write_value;
 		if (handler_write != NULL)
 			(*parent_write.*handler_write)();
@@ -103,6 +106,7 @@ void Register::write_bit(uint8_t bit_index, bool bit_value)
 
 	if (write_access)
 	{
+		previous_value = value;
 		temp_value = 1 << bit_index;
 		if (bit_value==1)
 		{
