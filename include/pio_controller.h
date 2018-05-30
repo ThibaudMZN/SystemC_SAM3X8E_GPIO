@@ -3,17 +3,16 @@
 #include "systemc.h"
 #include "PIO.h"
 
-template<const int base_addr = 0x00>
+template<const uint32_t base_addr = 0x00>
 SC_MODULE(pio_controller)
 {
-
   PIO pio;
   bool enable;
-  PMC_TARGET pmc_target = PMC_TARGET("pmc_target", &enable);
+  PMC_TARGET pmc_target;/*, &enable);*/
 
-  SC_CTOR(pio_controller)
+  SC_CTOR(pio_controller) : pio(base_addr), pmc_target("pmc_target", &enable)
   {
-
+    //pio = new PIO(base_addr);
   }
 };
 
