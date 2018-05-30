@@ -41,6 +41,19 @@
    return regs[n].read_bit(bit_index);
  }
 
+ uint8_t PIO::select_peripheral(uint32_t index_register, uint8_t bit_index)
+ {
+ 	uint32_t mask_bit = 1 << bit_index;
+ 	if ((regs[PIO_PSR_OFFSET].value & mask_bit) == 0)
+ 	{
+ 		if ((regs[PIO_ABSR_OFFSET].value & mask_bit) == 0)
+ 			return MUX_PERIPH_A;
+ 		else
+ 			return MUX_PERIPH_B;
+ 	}
+ 	else
+ 		return MUX_GPIO;
+ }
 
  void PIO::initRegs()
  {
