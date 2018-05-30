@@ -94,13 +94,13 @@
 // §31.5.1 pull-up disabled PIO_PUSR = 1, pull_up enabled PIO_PUSR = 0
 void PIO::Callback_pull_up()
  {
-     if (regs[PIO_PUDR_OFFSET/4].value == 1)
-        regs[PIO_PUSR_OFFSET/4].value = 1;
-    if (regs[PIO_PUER_OFFSET/4].value == 1)
-        regs[PIO_PUSR_OFFSET/4].value = 0;
+   regs[PIO_PUSR_OFFSET/4].value = (regs[PIO_PUDR_OFFSET/4].value &
+                                    regs[PIO_PUER_OFFSET/4].value);
+    
  }
 
-/*void selection_IOline_peripheral();
+// §
+/* void PIO::selection_IOline_peripheral()
 {
     PIO_PSR = PIO_PER & not(PIO_PDR);
     PIO_PSR = 1            // lreset value of PIO_PSR
@@ -113,7 +113,7 @@ void PIO::Callback_pull_up()
     {
         
     }
-*
+*/
 
  /* void PIO::update()
  {
