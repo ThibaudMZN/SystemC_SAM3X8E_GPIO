@@ -37,6 +37,7 @@ class Register
 	void (PIO::*handler_read)(void);
 
 public:
+	uint32_t previous_value;
 	uint32_t value;
 	Register();
 	Register(uint32_t base, uint32_t offset, uint8_t access);
