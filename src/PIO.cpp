@@ -125,6 +125,7 @@
    regs[PIO_LSR_OFFSET/4].init_write_handler(this, &PIO::Callback_ELSR);
    regs[PIO_FELLSR_OFFSET/4].init_write_handler(this, &PIO::Callback_FRLHSR);
    regs[PIO_REHLSR_OFFSET/4].init_write_handler(this, &PIO::Callback_FRLHSR);
+   regs[PIO_IFSR_OFFSET/4].init_write_handler(this, &PIO::Callback_inputEdge_LevelEdge);
 }
 
 // Paragraph 31.5.2
