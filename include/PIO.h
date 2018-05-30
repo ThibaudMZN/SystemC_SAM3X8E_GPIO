@@ -28,6 +28,7 @@ using namespace std;
    void pointToCallback();
    void write_in_reg(uint32_t n, uint32_t val);
    uint32_t read_in_reg(uint32_t n);
+   bool interrupt;
 
    void Callback_PER();
    void Callback_Glitch_debounce();
@@ -37,4 +38,5 @@ using namespace std;
    void Callback_selection_peripheral();
    void Callback_Output_control_OSR();
    void Callback_Output_control_ODSR();
+   void Callback_multi_drive_control();
 };

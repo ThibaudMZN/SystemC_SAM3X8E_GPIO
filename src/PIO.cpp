@@ -18,6 +18,7 @@
  {
    base_address = base;
    initRegs();
+   interrupt = false;
  }
 
  void PIO::initRegs()
@@ -93,6 +94,8 @@
    regs[PIO_CODR_OFFSET/4].init_write_handler(this, &PIO::Callback_Output_control_ODSR);
    regs[PIO_SCIFSR_OFFSET/4].init_write_handler(this, &PIO::Callback_Glitch_debounce); 
    regs[PIO_DIFSR_OFFSET/4].init_write_handler(this, &PIO::Callback_Glitch_debounce);
+   regs[PIO_MDER_OFFSET/4].init_write_handler(this, &PIO::Callback_multi_drive_control);
+   regs[PIO_MDDR_OFFSET/4].init_write_handler(this, &PIO::Callback_multi_drive_control);
  }
 
 // Paragraph 31.5.2
@@ -154,6 +157,12 @@ void PIO::Callback_inputEdge_LevelEdge()
  	mask_clear = regs[PIO_CODR_OFFSET/4].value & regs[PIO_OSR_OFFSET/4].value;
  	regs[PIO_ODSR_OFFSET/4].value = mask_set & ~mask_clear; // ODSR = SODR  and not(CODR)
  }
+
+// Paragraph 31.5.6
+void PIO::Callback_multi_drive_control()
+{
+    regs[PIO_MDSR_OFFSET/4].value = (regs[PIO_MDER_OFFSET/4].value & ~regs[PIO_MDDR_OFFSET/4].value);
+}
 
 // Paragraph 31.5.8 Nothing to do
 
