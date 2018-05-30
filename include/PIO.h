@@ -32,5 +32,6 @@ using namespace std;
    void Callback_PER();
    void Callback_pull_up();
    void Callback_selection_IOline_peripheral();
+   void Callback_selection_peripheral();
 
  };

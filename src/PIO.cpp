@@ -92,7 +92,7 @@
 
 
 // §31.5.1 pull-up disabled PIO_PUSR = 1, pull_up enabled PIO_PUSR = 0
-void PIO::Callback_pull_up()
+ void PIO::Callback_pull_up()
  {
    regs[PIO_PUSR_OFFSET/4].value = (regs[PIO_PUDR_OFFSET/4].value &
                                     regs[PIO_PUER_OFFSET/4].value);
@@ -100,17 +100,17 @@ void PIO::Callback_pull_up()
  }
 
 // §31.5.2 if PIO_PSR value = 0, pin is controlled by PIO_ABSR, if PIO_PSR value = 1,pin is controlled by PIO controller
-void PIO::Callback_selection_IOline_peripheral()
-{
+ void PIO::Callback_selection_IOline_peripheral()
+   {
     regs[PIO_PSR_OFFSET/4].value = (regs[PIO_PER_OFFSET/4].value & ~regs[PIO_PDR_OFFSET/4].value);
-    
     }
 
-/*void selection_peripheral(); // bit = 0 (periph A), =1 (periph B)
+// §31.5.3 PIO_ABSR value = 0, pin is on peripheral A, PIO_ABSR value = 1, pin is on peripheral B
+ void PIO::Callback_selection_peripheral() 
     {
-        
+        regs[PIO_ABSR_OFFSET/4].value = regs[PIO_PSR_OFFSET/4].value & 0xFFFFFFFF;
     }
-*/
+
 
  /* void PIO::update()
  {
