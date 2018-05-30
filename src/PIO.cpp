@@ -89,6 +89,45 @@
    regs[2].value = (regs[0].value & ~regs[1].value); // PSR = PER  and not(PDR)
  }
 
+
+
+// §31.5.1 pull-up disabled PIO_PUSR = 1, pull_up enabled PIO_PUSR = 0
+void PIO::Callback_pull_up()
+ {
+   regs[PIO_PUSR_OFFSET/4].value = (regs[PIO_PUDR_OFFSET/4].value &
+                                    regs[PIO_PUER_OFFSET/4].value);
+    
+ }
+
+// §31.5.2 if PIO_PSR value = 0, pin is controlled by PIO_ABSR, if PIO_PSR value = 1,pin is controlled by PIO controller
+void PIO::Callback_selection_IOline_peripheral()
+{
+    regs[PIO_PSR_OFFSET/4].value = (regs[PIO_PER_OFFSET/4].value & ~regs[PIO_PDR_OFFSET/4].value);
+    
+    }
+
+/*void selection_peripheral(); // bit = 0 (periph A), =1 (periph B)
+    {
+        
+    }
+*/
+
+ /* void PIO::update()
+ {
+   regs[2].value = (regs[0].value & ~regs[1].value); // PSR = PER  and not(PDR)
+ }*/
+
+ /*void PIO::update()
+ {
+   // Pin
+   PIO_PSR.write(PIO_PER.value & ~PIO_PDR.value);
+   // Pull Up
+   PIO_PUSR.write(PIO_PUER.value & ~PIO_PUDR.value);
+   // Output
+   PIO_OSR.write(PIO_OER.value & ~PIO_ODR.value);
+ }*/
+
+
  void PIO::write_in_reg(uint32_t n, uint32_t val)
  {
    regs[n].write(val);
