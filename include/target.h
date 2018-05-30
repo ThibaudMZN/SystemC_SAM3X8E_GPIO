@@ -1,5 +1,5 @@
-#ifndef TARGET_H
-#define TARGET_H
+//#ifndef TARGET_H
+//#define TARGET_H
 
 // Needed for the simple_target_socket
 #define SC_INCLUDE_DYNAMIC_PROCESSES
@@ -20,7 +20,7 @@ struct PIO_TARGET: sc_module
   // TLM-2 socket, defaults to 32-bits wide, base protocol
   tlm_utils::simple_target_socket<PIO_TARGET> socket;
 
-  //enum { SIZE = 256 };
+ 	//enum { SIZE = 256 };
 
   SC_CTOR(PIO_TARGET)
   : socket("socket")
@@ -48,8 +48,8 @@ struct PIO_TARGET: sc_module
     // Can ignore DMI hint and extensions
     // Using the SystemC report handler is an acceptable way of signalling an error
 
-    if (adr >= sc_dt::uint64(SIZE) || byt != 0 || len > 4 || wid < len)
-      SC_REPORT_ERROR("TLM-2", "Target does not support given generic payload transaction");
+//    if (adr >= sc_dt::uint64(1) || byt != 0 || len > 4 || wid < len)
+//      SC_REPORT_ERROR("TLM-2", "Target does not support given generic payload transaction");
 
     // Obliged to implement read and write commands
     if ( cmd == tlm::TLM_READ_COMMAND )
@@ -62,7 +62,7 @@ struct PIO_TARGET: sc_module
   }
 
   //int mem[SIZE];
-  bool enable_from_pmc;
+  int enable_from_pmc;
 };
 
-#endif
+//#endif
