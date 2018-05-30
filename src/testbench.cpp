@@ -7,6 +7,9 @@ int sc_main(int argc, char* argv[])
   NVIC_TARGET nvic_target("nvic_target_tb");
   PMC_INITIATOR pmc_initiator("pmc_target_tb");
 
+  // Bind initiator socket to target sockets
+  pmc_initiator->socket.bind( pio_controller.pmc_target->socket );
+  pio_controller.nvic_initiator->socket.bind( nvic_target->socket );
   sc_start();
   return 0;
 }
