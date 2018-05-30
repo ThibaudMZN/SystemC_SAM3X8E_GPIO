@@ -33,4 +33,7 @@ using namespace std;
    void Callback_Glitch_debounce();
    void Callback_pull_up();
    void Callback_selection_IOline_peripheral();
- };
+  void Callback_selection_peripheral();
+   void Callback_Output_control_OSR();
+   void Callback_Output_control_ODSR();
+};

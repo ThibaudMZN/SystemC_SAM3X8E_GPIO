@@ -3,16 +3,21 @@
 #include "systemc.h"
 #include "PIO.h"
 
-template<const int base_addr = 0x00>
+template<const uint32_t base_addr = 0x00>
 SC_MODULE(pio_controller)
 {
+  PIO pio;
+  bool enable;
+  PMC_TARGET pmc_target;/*, &enable);*/
 
-  PIO* pio; // déclaration d'un PIO CONTROLLER
-  bool enable; // envoyé par PMC
+  SC_CTOR(pio_controller) : pio(base_addr), pmc_target("pmc_target", &enable)
+  {
+    //pio = new PIO(base_addr);
+  }
 };
 
 
-SC_MODULE(Top)
+/*SC_MODULE(Top)
 {
   PMC_INITIATOR *initiator;
   PIO_TARGET    *memory;
@@ -28,4 +33,4 @@ SC_MODULE(Top)
     // Bind initiator socket to target socket
     initiator->socket.bind( memory->socket );
   }
-};
+};*/
