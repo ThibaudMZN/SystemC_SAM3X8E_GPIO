@@ -8,6 +8,8 @@ using namespace std;
 #include "tlm.h"
 #include "tlm_utils/simple_target_socket.h"
 
+#include "PIO.h"
+
 class PMC_TARGET: public sc_module
 {
   tlm_utils::simple_target_socket<PMC_TARGET> socket;
@@ -32,6 +34,32 @@ class PMC_TARGET: public sc_module
       memcpy(parent_enable, ptr, len);
 
     trans.set_response_status( tlm::TLM_OK_RESPONSE );
+  }
+
+};
+
+class GPIO_TARGET: public sc_module
+{
+  tlm_utils::simple_target_socket<GPIO_TARGET> socket;
+  uint32_t gpio_addr;
+  PIO* pio;
+
+  public:
+    GPIO_TARGET(sc_module_name nm, uint32_t reg_addr, PIO* pio_master):sc_module(nm), socket("socket")
+    {
+      socket.register_b_transport(this, &GPIO_TARGET::b_transport);
+      gpio_addr = reg_addr;
+      pio = pio_master;
+    }
+
+  virtual void b_transport( tlm::tlm_generic_payload& trans, sc_time& delay )
+  {
+    tlm::tlm_command cmd = trans.get_command();
+    unsigned char*   ptr = trans.get_data_ptr();
+
+    if (cmd == tlm::TLM_WRITE_COMMAND)
+      pio->write_bit_in_reg(gpio_addr, (bool) &ptr);
+      trans.set_response_status(tlm::TLM_OK_RESPONSE);
   }
 
 };

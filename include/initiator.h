@@ -13,7 +13,7 @@ class NVIC_INITIATOR: sc_module
   bool Val;
 
   public:
-    NVIC_INITIATOR(sc_module_name nm):sc_module(nm), socket("socket")
+    NVIC_INITIATOR(sc_module_name nm) :sc_module(nm), socket("socket")
     {
       Val = true;
     }
