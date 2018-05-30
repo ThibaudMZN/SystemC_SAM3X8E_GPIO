@@ -151,8 +151,9 @@ void PIO::Callback_pull_up()
 // §31.5.10 Input Edge/Level Interrupt
 void PIO::Callback_inputEdge_LevelEdge()
 {
-	if ((regs[PIO_IMR_OFFSET/4].value & regs[PIO_IFSR_OFFSET/4].value) != 0)
-		interrupt = false;
+//if (regs[PIO_PDSR_OFFSET/4].value != regs[PIO_PDSR_OFFSET/4].previous_value)
+    regs[PIO_ISR_OFFSET/4].value = regs[PIO_PDSR_OFFSET/4].value &
+                                   regs[PIO_IMR_OFFSET/4].value;
 }
 
 // PIO interrupt generation
@@ -179,7 +180,7 @@ void PIO::Callback_ELSR()
 // Additional interrupt mode : polarity event selection
 void PIO::Callback_FRLHSR()
 {
-    regs[PIO_FRLHSR_OFFSET/4].value = regs[PIO_FELLSR_OFFSET/4].value &
+  regs[PIO_FRLHSR_OFFSET/4].value = regs[PIO_FELLSR_OFFSET/4].value &
                                       ~regs[PIO_REHLSR_OFFSET/4].value;
 }
 
