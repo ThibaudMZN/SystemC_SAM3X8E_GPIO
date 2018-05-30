@@ -28,15 +28,14 @@ using namespace std;
    void pointToCallback();
    void write_in_reg(uint32_t n, uint32_t val);
    uint32_t read_in_reg(uint32_t n);
-   bool interrupt;
 
    void Callback_PER();
-   void Callback_Glitch_debounce();
    void Callback_pull_up();
    void Callback_selection_IOline_peripheral();
+<<<<<<< HEAD
    void Callback_inputEdge_LevelEdge();
+=======
    void Callback_selection_peripheral();
-   void Callback_Output_control_OSR();
-   void Callback_Output_control_ODSR();
-   void Callback_multi_drive_control();
-};
+
+>>>>>>> 06c97fc31b2d9d4bed01d2099c3976c2578ac242
+ };
