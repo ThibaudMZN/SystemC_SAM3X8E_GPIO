@@ -3,6 +3,8 @@
 #include "systemc.h"
 #include "PIO.h"
 #include "adr.h"
+#include <vector>
+#include <string>
 
 template<const uint32_t base_addr = 0x00>
 SC_MODULE(pio_controller)
@@ -12,17 +14,23 @@ SC_MODULE(pio_controller)
   PIO pio;
   PMC_TARGET pmc_target;
   NVIC_INITIATOR nvic_initiator;
-  GPIO_TARGET URXD;
-  //GPIO_INITIATOR UTXD;
+
+  std::vector<GPIO_INITIATOR*> peripheral_A;
+  std::vector<GPIO_INITIATOR*> peripheral_B;
+
+  std::vector<GPIO_TARGET*> pins;
 
   SC_CTOR(pio_controller) :
   pio(base_addr),
   pmc_target("pmc_target", &enable),
-  nvic_initiator("nvic_target"),
-  URXD("urxd", PIO_PDSR_OFFSET, (uint8_t) 8, &pio)
-  //UTXD("utxd"),
+  nvic_initiator("nvic_target")
   {
-    //nvic_initiator.emit_interrupt();
+    for(int i = 0; i < 32; i++)
+    {
+      peripheral_A.push_back(new GPIO_INITIATOR("peripheral_A"));
+      peripheral_B.push_back(new GPIO_INITIATOR("peripheral_B"));
+      pins.push_back(new GPIO_TARGET("pin", PIO_PDSR_OFFSET, i, &pio, peripheral_A, peripheral_B));
+    }
   }
 };
 
