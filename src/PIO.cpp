@@ -21,6 +21,27 @@
    interrupt = false;
  }
 
+ void PIO::write_in_reg(uint32_t n, uint32_t val)
+ {
+   regs[n].write(val);
+ }
+
+ uint32_t PIO::read_in_reg(uint32_t n)
+ {
+   return regs[n].read();
+ }
+
+ void PIO::write_bit_in_reg(uint32_t n, uint8_t bit_index, bool bit_value)
+ {
+   regs[n].write_bit(bit_index, bit_value);
+ }
+
+ bool PIO::read_bit_in_reg(uint32_t n, uint8_t bit_index)
+ {
+   return regs[n].read_bit(bit_index);
+ }
+
+
  void PIO::initRegs()
  {
    regs.push_back(*(new Register(base_address, PIO_PER_OFFSET, WRITE_ONLY, 0)));
@@ -96,7 +117,15 @@
    regs[PIO_DIFSR_OFFSET/4].init_write_handler(this, &PIO::Callback_Glitch_debounce);
    regs[PIO_MDER_OFFSET/4].init_write_handler(this, &PIO::Callback_multi_drive_control);
    regs[PIO_MDDR_OFFSET/4].init_write_handler(this, &PIO::Callback_multi_drive_control);
- }
+   regs[PIO_IER_OFFSET/4].init_write_handler(this, &PIO::Callback_IMR);
+   regs[PIO_IDR_OFFSET/4].init_write_handler(this, &PIO::Callback_IMR);
+   regs[PIO_AIMER_OFFSET/4].init_write_handler(this, &PIO::Callback_AIMMR);
+   regs[PIO_AIMDR_OFFSET/4].init_write_handler(this, &PIO::Callback_AIMMR);
+   regs[PIO_ESR_OFFSET/4].init_write_handler(this, &PIO::Callback_ELSR);
+   regs[PIO_LSR_OFFSET/4].init_write_handler(this, &PIO::Callback_ELSR);
+   regs[PIO_FELLSR_OFFSET/4].init_write_handler(this, &PIO::Callback_FRLHSR);
+   regs[PIO_REHLSR_OFFSET/4].init_write_handler(this, &PIO::Callback_FRLHSR);
+}
 
 // Paragraph 31.5.2
  void PIO::Callback_PER()
@@ -121,7 +150,8 @@ void PIO::Callback_pull_up()
 // §31.5.10 Input Edge/Level Interrupt
 void PIO::Callback_inputEdge_LevelEdge()
 {
-
+	if ((regs[PIO_IMR_OFFSET/4].value & regs[PIO_IFSR_OFFSET/4].value) != 0)
+		interrupt = false;
 }
 
 // PIO interrupt generation
@@ -181,7 +211,7 @@ void PIO::Callback_multi_drive_control()
     regs[PIO_MDSR_OFFSET/4].value = (regs[PIO_MDER_OFFSET/4].value & ~regs[PIO_MDDR_OFFSET/4].value);
 }
 
-// Paragraph 31.5.8 Nothing to do
+// Paragraph 31.5.8
 
 // Paragraph 31.5.9 
  void PIO::Callback_Glitch_debounce()
@@ -193,14 +223,4 @@ void PIO::Callback_multi_drive_control()
 // If a GPIO is locked by a peripheral (mainly by PWM), writing in PER,PDR, MDER
 //    PUDR, PUER and ABSR is discarded.
 // Not implemented  
-
- void PIO::write_in_reg(uint32_t n, uint32_t val)
- {
-   regs[n].write(val);
- }
-
- uint32_t PIO::read_in_reg(uint32_t n)
- {
-   return regs[n].read();
- }
 

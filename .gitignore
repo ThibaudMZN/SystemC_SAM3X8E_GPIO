@@ -32,6 +32,9 @@ gpio_SAM3X8E
 *.a
 *.lib
 
+# tempory files
+*.*~
+
 # Executables
 *.exe
 *.out
