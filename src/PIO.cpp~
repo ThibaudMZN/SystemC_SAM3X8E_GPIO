@@ -101,10 +101,9 @@
 
 // §31.5.2 if PIO_PSR value = 0, pin is controlled by PIO_ABSR, if PIO_PSR value = 1,pin is controlled by PIO controller
  void PIO::Callback_selection_IOline_peripheral()
- {
-    regs[PIO_PSR_OFFSET/4].value = (regs[PIO_PER_OFFSET/4].value & 
-                                    ~regs[PIO_PDR_OFFSET/4].value);
- }
+   {
+    regs[PIO_PSR_OFFSET/4].value = (regs[PIO_PER_OFFSET/4].value & ~regs[PIO_PDR_OFFSET/4].value);
+    }
 
 // §31.5.10 Input Edge/Level Interrupt
 void PIO::Callback_inputEdge_LevelEdge()
