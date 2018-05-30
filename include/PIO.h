@@ -19,6 +19,10 @@ using namespace std;
 #include "adr.h"
 #include <vector>
 
+#define MUX_PERIPH_A	1
+#define MUX_PERIPH_B	2
+#define MUX_GPIO		3
+
 
  class PIO
  {
@@ -47,6 +51,7 @@ using namespace std;
    void write_bit_in_reg(uint32_t n, uint8_t bit_index, bool bit_value);
    bool read_bit_in_reg(uint32_t n, uint8_t bit_index);
    bool interrupt;
+   uint8_t select_peripheral(uint32_t index_register, uint8_t bit_index);
 };
 
 #endif
