@@ -52,7 +52,7 @@
  	 regs.push_back(*(new Register())); // RESERVED
  	 regs.push_back(*(new Register(base_address, PIO_ABSR_OFFSET, READ_WRITE, 0)));
  	 regs.push_back(*(new Register())); // RESERVED
- 	 regs.push_back(*(new Register(base_address, PIO_SCIFSR, WRITE_ONLY, 0)));
+ 	 regs.push_back(*(new Register(base_address, PIO_SCIFSR_OFFSET, WRITE_ONLY, 0)));
  	 regs.push_back(*(new Register(base_address, PIO_IFDGSR_OFFSET, WRITE_ONLY, 0)));
  	 regs.push_back(*(new Register(base_address, PIO_SCDR_OFFSET, READ_WRITE, 0)));
  	 regs.push_back(*(new Register())); // RESERVED

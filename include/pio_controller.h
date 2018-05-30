@@ -7,12 +7,18 @@ template<const int base_addr = 0x00>
 SC_MODULE(pio_controller)
 {
 
-  PIO* pio; // déclaration d'un PIO CONTROLLER
-  bool enable; // envoyé par PMC
+  PIO pio;
+  bool enable;
+  PMC_TARGET pmc_target = PMC_TARGET("pmc_target", &enable);
+
+  SC_CTOR(pio_controller)
+  {
+
+  }
 };
 
 
-SC_MODULE(Top)
+/*SC_MODULE(Top)
 {
   PMC_INITIATOR *initiator;
   PIO_TARGET    *memory;
@@ -28,4 +34,4 @@ SC_MODULE(Top)
     // Bind initiator socket to target socket
     initiator->socket.bind( memory->socket );
   }
-};
+};*/

@@ -40,6 +40,8 @@ int sc_main(int argc, char* argv[])
   sc_start(); // run forever*/
 
   pio_controller<PIOA_BASE_ADDR> PIO_A("pio_A");
+  //Top top_module("top");
+  sc_start();
 
   return 0;
 
