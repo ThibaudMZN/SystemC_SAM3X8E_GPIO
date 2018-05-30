@@ -30,8 +30,11 @@ using namespace std;
    uint32_t read_in_reg(uint32_t n);
 
    void Callback_PER();
+   void Callback_Glitch_debounce();
    void Callback_pull_up();
    void Callback_selection_IOline_peripheral();
    void Callback_inputEdge_LevelEdge();
    void Callback_selection_peripheral();
- };
+   void Callback_Output_control_OSR();
+   void Callback_Output_control_ODSR();
+};

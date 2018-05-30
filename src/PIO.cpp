@@ -82,17 +82,27 @@
  {
    regs[0].init_write_handler(this, &PIO::Callback_PER);
    regs[1].init_write_handler(this, &PIO::Callback_PER);
+   regs[PIO_PUDR_OFFSET/4].init_write_handler(this, &PIO::Callback_pull_up);
+   regs[PIO_PUER_OFFSET/4].init_write_handler(this, &PIO::Callback_pull_up);
+   regs[PIO_PER_OFFSET/4].init_write_handler(this, &PIO::Callback_selection_IOline_peripheral);
+   regs[PIO_PDR_OFFSET/4].init_write_handler(this, &PIO::Callback_selection_IOline_peripheral);
+   regs[PIO_PSR_OFFSET/4].init_write_handler(this, &PIO::Callback_selection_peripheral);
+   regs[PIO_OER_OFFSET/4].init_write_handler(this, &PIO::Callback_Output_control_OSR);
+   regs[PIO_ODR_OFFSET/4].init_write_handler(this, &PIO::Callback_Output_control_OSR);
+   regs[PIO_SODR_OFFSET/4].init_write_handler(this, &PIO::Callback_Output_control_ODSR);
+   regs[PIO_CODR_OFFSET/4].init_write_handler(this, &PIO::Callback_Output_control_ODSR);
+   regs[PIO_SCIFSR_OFFSET/4].init_write_handler(this, &PIO::Callback_Glitch_debounce); 
+   regs[PIO_DIFSR_OFFSET/4].init_write_handler(this, &PIO::Callback_Glitch_debounce);
  }
 
+// Paragraph 31.5.2
  void PIO::Callback_PER()
  {
    regs[2].value = (regs[0].value & ~regs[1].value); // PSR = PER  and not(PDR)
  }
 
-
-
 // §31.5.1 pull-up disabled PIO_PUSR = 1, pull_up enabled PIO_PUSR = 0
- void PIO::Callback_pull_up()
+void PIO::Callback_pull_up()
  {
    regs[PIO_PUSR_OFFSET/4].value = (regs[PIO_PUDR_OFFSET/4].value &
                                     regs[PIO_PUER_OFFSET/4].value);
@@ -105,7 +115,6 @@
     regs[PIO_PSR_OFFSET/4].value = (regs[PIO_PER_OFFSET/4].value & 
                                     ~regs[PIO_PDR_OFFSET/4].value);
  }
-
 // §31.5.10 Input Edge/Level Interrupt
 void PIO::Callback_inputEdge_LevelEdge()
 {
@@ -123,29 +132,41 @@ void PIO::Callback_inputEdge_LevelEdge()
                                       ~regs[PIO_REHLSR_OFFSET/4].value;
 }
 
-/*void selection_peripheral(); // bit = 0 (periph A), =1 (periph B)
+/*void selection_peripheral(); // bit = 0 (periph A), =1 (periph B) */
 // §31.5.3 PIO_ABSR value = 0, pin is on peripheral A, PIO_ABSR value = 1, pin is on peripheral B
  void PIO::Callback_selection_peripheral() 
-    {
-        regs[PIO_ABSR_OFFSET/4].value = regs[PIO_PSR_OFFSET/4].value & 0xFFFFFFFF;
-    }
+{
+    regs[PIO_ABSR_OFFSET/4].value = regs[PIO_PSR_OFFSET/4].value & 0xFFFFFFFF;
+}
 
-
- /* void PIO::update()
+// Paragraph 31.5.4
+ void PIO::Callback_Output_control_OSR()
  {
-   regs[2].value = (regs[0].value & ~regs[1].value); // PSR = PER  and not(PDR)
- }*/
+   regs[PIO_OSR_OFFSET/4].value = (regs[PIO_OER_OFFSET/4].value & ~regs[PIO_ODR_OFFSET/4].value); // OSR = OER  and not(ODR)
+ }
 
- /*void PIO::update()
+ void PIO::Callback_Output_control_ODSR()
  {
-   // Pin
-   PIO_PSR.write(PIO_PER.value & ~PIO_PDR.value);
-   // Pull Up
-   PIO_PUSR.write(PIO_PUER.value & ~PIO_PUDR.value);
-   // Output
-   PIO_OSR.write(PIO_OER.value & ~PIO_ODR.value);
- }*/
+ 	uint32_t temp_val = 0;
+ 	uint32_t mask_set, mask_clear;
+ 	// To avoid modification of inputs
+ 	mask_set = regs[PIO_SODR_OFFSET/4].value & regs[PIO_OSR_OFFSET/4].value;
+ 	mask_clear = regs[PIO_CODR_OFFSET/4].value & regs[PIO_OSR_OFFSET/4].value;
+ 	regs[PIO_ODSR_OFFSET/4].value = mask_set & ~mask_clear; // ODSR = SODR  and not(CODR)
+ }
 
+// Paragraph 31.5.8 Nothing to do
+
+// Paragraph 31.5.9 
+ void PIO::Callback_Glitch_debounce()
+ {
+   regs[PIO_IFDGSR_OFFSET/4].value = (regs[PIO_SCIFSR_OFFSET/4].value & ~regs[PIO_DIFSR_OFFSET/4].value); // PSR = SCIFSR  and not(DIFSR)
+ }
+
+// Paragraph 31.5.11 I/O lines lock
+// If a GPIO is locked by a peripheral (mainly by PWM), writing in PER,PDR, MDER
+//    PUDR, PUER and ABSR is discarded.
+// Not implemented  
 
  void PIO::write_in_reg(uint32_t n, uint32_t val)
  {
@@ -156,3 +177,4 @@ void PIO::Callback_inputEdge_LevelEdge()
  {
    return regs[n].read();
  }
+

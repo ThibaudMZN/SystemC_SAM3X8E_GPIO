@@ -28,9 +28,10 @@ class Register
 	uint32_t address_offset;
 	bool read_access;
 	bool write_access;
-	PIO* parent;
+	PIO* parent_write;
+	PIO* parent_read;
 	void (PIO::*handler_write)(void);
-	void (*handler_read)(void);
+	void (PIO::*handler_read)(void);
 
 public:
 	uint32_t value;
@@ -38,7 +39,7 @@ public:
 	Register(uint32_t base, uint32_t offset, uint8_t access);
 	Register(uint32_t base, uint32_t offset, uint8_t access, uint32_t reset_value);
 	void init_write_handler(PIO* obj, void (PIO::*func)(void));
-	void init_read_handler(void (*func_read)(void));
+	void init_read_handler(PIO* obj, void (PIO::*func)(void));
 
 	void write(uint32_t write_value);
 	uint32_t read(void);

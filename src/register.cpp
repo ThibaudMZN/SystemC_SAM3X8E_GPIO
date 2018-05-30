@@ -60,13 +60,14 @@ Register::Register (uint32_t base, uint32_t offset, uint8_t access, uint32_t res
 
 void Register::init_write_handler(PIO* obj, void (PIO::*func)(void))
 {
-	parent = obj;
+	parent_write = obj;
 	handler_write = func;
 }
 
-void Register::init_read_handler(void (*func_read)(void))
+void Register::init_read_handler(PIO* obj, void (PIO::*func)(void))
 {
-	handler_read = func_read;
+	parent_read = obj;
+	handler_read = func;
 }
 
 void Register::write(uint32_t write_value)
@@ -75,7 +76,7 @@ void Register::write(uint32_t write_value)
 	{
 		value = write_value;
 		if (handler_write != NULL)
-			(*parent.*handler_write)();
+			(*parent_write.*handler_write)();
 	}
 }
 
@@ -91,7 +92,7 @@ uint32_t Register::read(void)
 		respons = 0;
 
 	if (handler_read != NULL)
-		handler_read();
+		(*parent_read.*handler_read)();
 
 	return value;
 }
@@ -112,7 +113,7 @@ void Register::write_bit(uint8_t bit_index, bool bit_value)
 			value &= !temp_value;
 		}
 		if (handler_write != NULL)
-			(*parent.*handler_write)();
+			(*parent_write.*handler_write)();
 	}
 }
 
@@ -130,7 +131,6 @@ bool Register::read_bit(uint8_t bit_index)
 		respons = 0;
 
 	if (handler_read != NULL)
-		handler_read();
-
+		(*parent_read.*handler_read)();
 	return respons;
 }
