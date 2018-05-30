@@ -22,7 +22,7 @@ using namespace std;
  	uint32_t base_address;
 
  public:
- std::vector<Register> regs;
+   std::vector<Register> regs;
  	 PIO(uint32_t base);
    void initRegs();
    void pointToCallback();
@@ -31,5 +31,6 @@ using namespace std;
 
    void Callback_PER();
    void Callback_Glitch_debounce();
- 
+   void Callback_pull_up();
+   void Callback_selection_IOline_peripheral();
  };
