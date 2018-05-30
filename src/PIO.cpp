@@ -99,17 +99,14 @@ void PIO::Callback_pull_up()
     
  }
 
-// §
-/* void PIO::selection_IOline_peripheral()
+// §31.5.2 if PIO_PSR value = 0, pin is controlled by PIO_ABSR, if PIO_PSR value = 1,pin is controlled by PIO controller
+void PIO::Callback_selection_IOline_peripheral()
 {
-    PIO_PSR = PIO_PER & not(PIO_PDR);
-    PIO_PSR = 1            // lreset value of PIO_PSR
-    if PIO_PSR = 1
-    then I/O_line = PIO_ABSR
-    else PIO_PSR = 0
-    then I/O_line = PIO_controller
+    regs[PIO_PSR_OFFSET/4].value = (regs[PIO_PER_OFFSET/4].value & ~regs[PIO_PDR_OFFSET/4].value);
+    
     }
-    void selection_peripheral(); // bit = 0 (periph A), =1 (periph B)
+
+/*void selection_peripheral(); // bit = 0 (periph A), =1 (periph B)
     {
         
     }
