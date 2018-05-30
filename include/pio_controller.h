@@ -13,12 +13,14 @@ SC_MODULE(pio_controller)
   PMC_TARGET pmc_target;
   NVIC_INITIATOR nvic_initiator;
   GPIO_TARGET URXD;
+  //GPIO_INITIATOR UTXD;
 
   SC_CTOR(pio_controller) :
   pio(base_addr),
   pmc_target("pmc_target", &enable),
   nvic_initiator("nvic_target"),
   URXD("urxd", PIO_PDSR_OFFSET, (uint8_t) 8, &pio)
+  //UTXD("utxd"),
   {
     //nvic_initiator.emit_interrupt();
   }
