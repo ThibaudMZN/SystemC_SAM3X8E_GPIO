@@ -30,4 +30,6 @@ using namespace std;
    uint32_t read_in_reg(uint32_t n);
 
    void Callback_PER();
+   void Callback_pull_up();
+
  };

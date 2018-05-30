@@ -52,7 +52,7 @@
  	 regs.push_back(*(new Register())); // RESERVED
  	 regs.push_back(*(new Register(base_address, PIO_ABSR_OFFSET, READ_WRITE, 0)));
  	 regs.push_back(*(new Register())); // RESERVED
- 	 regs.push_back(*(new Register(base_address, PIO_SCIFSR, WRITE_ONLY, 0)));
+ 	 regs.push_back(*(new Register(base_address, PIO_SCIFSR_OFFSET, WRITE_ONLY, 0)));
  	 regs.push_back(*(new Register(base_address, PIO_IFDGSR_OFFSET, WRITE_ONLY, 0)));
  	 regs.push_back(*(new Register(base_address, PIO_SCDR_OFFSET, READ_WRITE, 0)));
  	 regs.push_back(*(new Register())); // RESERVED
@@ -88,6 +88,48 @@
  {
    regs[2].value = (regs[0].value & ~regs[1].value); // PSR = PER  and not(PDR)
  }
+
+
+
+// §31.5.1 pull-up disabled PIO_PUSR = 1, pull_up enabled PIO_PUSR = 0
+void PIO::Callback_pull_up()
+ {
+     if (regs[PIO_PUDR_OFFSET/4].value == 1)
+        regs[PIO_PUSR_OFFSET/4].value = 1;
+    if (regs[PIO_PUER_OFFSET/4].value == 1)
+        regs[PIO_PUSR_OFFSET/4].value = 0;
+ }
+
+/*void selection_IOline_peripheral();
+{
+    PIO_PSR = PIO_PER & not(PIO_PDR);
+    PIO_PSR = 1            // lreset value of PIO_PSR
+    if PIO_PSR = 1
+    then I/O_line = PIO_ABSR
+    else PIO_PSR = 0
+    then I/O_line = PIO_controller
+    }
+    void selection_peripheral(); // bit = 0 (periph A), =1 (periph B)
+    {
+        
+    }
+*
+
+ /* void PIO::update()
+ {
+   regs[2].value = (regs[0].value & ~regs[1].value); // PSR = PER  and not(PDR)
+ }*/
+
+ /*void PIO::update()
+ {
+   // Pin
+   PIO_PSR.write(PIO_PER.value & ~PIO_PDR.value);
+   // Pull Up
+   PIO_PUSR.write(PIO_PUER.value & ~PIO_PUDR.value);
+   // Output
+   PIO_OSR.write(PIO_OER.value & ~PIO_ODR.value);
+ }*/
+
 
  void PIO::write_in_reg(uint32_t n, uint32_t val)
  {
