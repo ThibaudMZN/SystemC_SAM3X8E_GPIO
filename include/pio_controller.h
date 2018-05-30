@@ -18,7 +18,7 @@ SC_MODULE(pio_controller)
   pio(base_addr),
   pmc_target("pmc_target", &enable),
   nvic_initiator("nvic_target"),
-  URXD("urxd", PIO_PDSR_OFFSET, (uint8_t) 8, &pio_master)
+  URXD("urxd", PIO_PDSR_OFFSET, (uint8_t) 8, &pio)
   {
     //nvic_initiator.emit_interrupt();
   }

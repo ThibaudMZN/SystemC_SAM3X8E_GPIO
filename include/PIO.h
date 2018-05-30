@@ -12,6 +12,9 @@
 
 using namespace std;
 
+#ifndef PIO_H
+#define PIO_H
+
 #include "register.h"
 #include "adr.h"
 #include <vector>
@@ -46,3 +49,5 @@ using namespace std;
    void Callback_Output_control_ODSR();
    void Callback_multi_drive_control();
 };
+
+#endif
