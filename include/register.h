@@ -12,6 +12,9 @@
 
 using namespace std;
 
+#ifndef REGISTER_H
+#define REGISTER_H
+
 #define NO_ACCESS	0x00
 #define READ 0x01
 #define WRITE 0x02
@@ -34,6 +37,7 @@ class Register
 	void (PIO::*handler_read)(void);
 
 public:
+	uint32_t previous_value;
 	uint32_t value;
 	Register();
 	Register(uint32_t base, uint32_t offset, uint8_t access);
@@ -47,60 +51,4 @@ public:
 	bool read_bit(uint8_t bit_index);
 };
 
-/*
-enum
-{
-	PER,
-	PDR,
-	PSR,
-	N_Used_1,
-	OER,
-	ODR,
-	OSR,
-	N_Used_2,
-	IFER,
-	IFDR,
-	IFSR,
-	N_Used_3,
-	SODR,
-	CODR,
-	ODSR,
-	PDSR,
-	IER,
-	IDR,
-	IMR,
-	ISR,
-	MDER,
-	MDDR,
-	MDSR,
-	N_Used_4,
-	PUDR,
-	PUER,
-	PUSR,
-	N_Used_5,
-	ABSR,
-	N_Used_6,
-	SCIFSR,
-	IFDGSR,
-	SCDR,
-	N_Used_7,
-	OWER,
-	OWDR,
-	N_Used_8,
-	AIMER,
-	AIMDR,
-	AIMMR,
-	N_Used_9,
-	ESR,
-	LSR,
-	ELSR,
-	N_Used_10,
-	FELLSR,
-	REHLSR,
-	FRLHSR,
-	N_Used_11,
-	LOCKSR,
-	WPMR,
-	WPSR
-} Registers_list;
-*/
+#endif

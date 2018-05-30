@@ -60,8 +60,13 @@ class GPIO_TARGET: public sc_module
     unsigned char*   ptr = trans.get_data_ptr();
 
     if (cmd == tlm::TLM_WRITE_COMMAND)
+<<<<<<< HEAD
+=======
+    {
+>>>>>>> 24ff0f5535a1265974af567d38bcb51c842d7180
       pio->write_bit_in_reg(gpio_offset/4, bit_offset, (bool*) ptr);
       trans.set_response_status(tlm::TLM_OK_RESPONSE);
+    }
   }
 
 };

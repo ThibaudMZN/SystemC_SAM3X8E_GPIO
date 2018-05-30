@@ -12,6 +12,9 @@
 
 using namespace std;
 
+#ifndef PIO_H
+#define PIO_H
+
 #include "register.h"
 #include "adr.h"
 #include <vector>
@@ -21,17 +24,6 @@ using namespace std;
  {
  	uint32_t base_address;
    std::vector<Register> regs;
-
- public:
- 	 PIO(uint32_t base);
-   void initRegs();
-   void pointToCallback();
-   void write_in_reg(uint32_t n, uint32_t val);
-   uint32_t read_in_reg(uint32_t n);
-   void write_bit_in_reg(uint32_t n, uint8_t bit_index, bool bit_value);
-   bool read_bit_in_reg(uint32_t n, uint8_t bit_index);
-   bool interrupt;
-
    void Callback_PER();
    void Callback_Glitch_debounce();
    void Callback_pull_up();
@@ -45,4 +37,16 @@ using namespace std;
    void Callback_Output_control_OSR();
    void Callback_Output_control_ODSR();
    void Callback_multi_drive_control();
+
+ public:
+   PIO(uint32_t base);
+   void initRegs();
+   void pointToCallback();
+   void write_in_reg(uint32_t n, uint32_t val);
+   uint32_t read_in_reg(uint32_t n);
+   void write_bit_in_reg(uint32_t n, uint8_t bit_index, bool bit_value);
+   bool read_bit_in_reg(uint32_t n, uint8_t bit_index);
+   bool interrupt;
 };
+
+#endif
